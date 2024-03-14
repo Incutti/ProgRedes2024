@@ -1,13 +1,27 @@
 import { Jugador } from "./Jugador";
 
 export class Equipo {
-    nombre: string;
-    jugadores: Set<Jugador>;
+    _nombre: string;
+    _jugadores: Set<Jugador>;
 
     constructor(nombre: string) {
-        this.nombre = nombre;
-        this.jugadores = new Set<Jugador>;
+        this._nombre = nombre;
+        this._jugadores = new Set<Jugador>;
     }
 
-    contratar(){}
+    get getNombre():string{
+        return this._nombre;
+    }
+    set setNombre(value:string){
+        this._nombre=value;
+    }
+    get getJugadores():Set<Jugador>{
+        return this._jugadores;
+    }
+    set setJugadores(value:Set<Jugador>){
+        this._jugadores=value;
+    }
+
+
+    
 }
