@@ -1,19 +1,23 @@
 import { Plato } from "./plato";
 import { Chef } from "./chef";
+import { Mesa } from "./mesa";
 
 export class Restaurante {
-    menu: Set<Plato>;
-    chefs: Set<Chef>;
+    _menu: Set<Plato>;
+    _chefs: Set<Chef>;
+    _mesas:Set<Mesa>;
 
 
     constructor() {
-        this.menu = new Set<Plato>;
-        this.chefs = new Set<Chef>;
+        this._menu = new Set<Plato>;
+        this._chefs = new Set<Chef>;
+        this._mesas = new Set<Mesa>;
+
     } 
     
 
     chequeoPlatoChef(platoNuevo: Plato) {
-        this.chefs.forEach(chefActual => {
+        this._chefs.forEach(chefActual => {
             if (platoNuevo.chef === chefActual) {
                 return true;
             }
@@ -22,7 +26,7 @@ export class Restaurante {
     };
 
     chequeoPlatoExiste(platoNuevo: Plato): boolean {
-        this.menu.forEach(platoActual => {
+        this._menu.forEach(platoActual => {
             if (platoNuevo == platoActual) {
                 return true;
             }
@@ -39,7 +43,7 @@ export class Restaurante {
         if (this.chequeoPlatoExiste(platoNuevo)) {
             throw new Error("El plato ya se encuentra en el menu");
         } else {
-            this.menu.add(platoNuevo);
+            this._menu.add(platoNuevo);
         }
     }catch(error){
         if (error instanceof Error){
@@ -57,13 +61,22 @@ export class Restaurante {
             throw new Error("El chef no tiene experiencia");
 
         } else {
-            this.chefs.add(nuevoChef);
+            this._chefs.add(nuevoChef);
         }
-    }catch(error){
-        if (error instanceof Error){
-        console.error(error.message);
+        }catch(error){
+            if (error instanceof Error){
+            console.error(error.message);
+            }
         }
     }
-        
+
+    conocerMesasDisponibles(): Set<Mesa> {
+        let mesasDisponibles: Set<Mesa> = new Set<Mesa>;
+        this._mesas.forEach(mesaActual => {
+            if (!mesaActual.getOcupada) {
+                mesasDisponibles.add(mesaActual);
+            }
+        });
+        return mesasDisponibles;
     }
 }
